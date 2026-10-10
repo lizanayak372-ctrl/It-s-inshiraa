@@ -1,267 +1,264 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tic Tac Toe 🎀</title>
-
 <style>
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #ffe4ef, #f3e8ff);
-  color: #823b69;
-  padding: 20px;
+*{box-sizing:border-box}
+body{
+ margin:0;min-height:100vh;padding:20px 12px;
+ display:flex;align-items:center;justify-content:center;
+ font-family:Arial,sans-serif;
+ background:linear-gradient(135deg,#ffe0ef,#e9ddff);
+ color:#873b70
 }
-
-.container {
-  width: 100%;
-  max-width: 380px;
-  text-align: center;
-  background: rgba(255,255,255,0.8);
-  border: 2px solid white;
-  border-radius: 28px;
-  padding: 24px 18px;
-  box-shadow: 0 12px 35px #d98bbd44;
+.app{
+ width:100%;max-width:390px;text-align:center;padding:23px 17px;
+ background:#ffffffdf;border:2px solid white;border-radius:28px;
+ box-shadow:0 12px 35px #ba78aa35
 }
-
-h1 {
-  margin: 0 0 8px;
-  font-size: 32px;
+h1{font-size:29px;margin:0 0 8px}
+.sub{color:#b078a0;margin-bottom:20px}
+.modes{display:flex;gap:9px;margin-bottom:18px}
+.mode{
+ flex:1;padding:12px 5px;border:2px solid #f4c6df;
+ border-radius:14px;background:#fff5fa;color:#a34e83;
+ font-weight:bold;font-size:13px;cursor:pointer
 }
-
-.subtitle {
-  color: #aa7094;
-  margin-bottom: 22px;
+.mode.active{background:#e879ad;color:white;border-color:#e879ad}
+.scores{display:flex;gap:8px;margin-bottom:15px}
+.score{flex:1;padding:10px 2px;background:#fff0f7;border-radius:13px;font-size:12px}
+.score strong{display:block;font-size:24px;margin-top:5px}
+#status{font-weight:bold;font-size:17px;min-height:25px;margin:16px 0}
+.board{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.cell{
+ aspect-ratio:1;border:0;border-radius:17px;background:#fff0f7;
+ box-shadow:0 4px 0 #efc2dc;font-size:45px;font-weight:bold;
+ color:#e34d98;cursor:pointer
 }
-
-.scores {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
+.cell.o{color:#9570df}
+.cell.win{background:#d8f8e7;box-shadow:0 4px 0 #9cdcb8}
+.actions{display:flex;gap:9px;margin-top:20px}
+.action{
+ flex:1;padding:13px 5px;border:0;border-radius:25px;
+ background:#e879ad;color:white;font-weight:bold;cursor:pointer;font-size:13px
 }
-
-.score-box {
-  flex: 1;
-  padding: 12px 5px;
-  border-radius: 15px;
-  background: #fff0f7;
-  font-size: 14px;
-}
-
-.score-box strong {
-  display: block;
-  font-size: 25px;
-  margin-top: 5px;
-}
-
-#status {
-  min-height: 28px;
-  font-size: 19px;
-  font-weight: bold;
-  margin: 15px 0;
-}
-
-.board {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.cell {
-  aspect-ratio: 1;
-  border: 0;
-  border-radius: 18px;
-  background: #fff0f7;
-  color: #d94691;
-  font-size: 48px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 4px 0 #efc2dc;
-  transition: transform .15s, background .15s;
-}
-
-.cell:active {
-  transform: scale(.94);
-}
-
-.cell.o {
-  color: #9b76df;
-}
-
-.cell.win {
-  background: #d8f8e7;
-  box-shadow: 0 4px 0 #a5e8c3;
-}
-
-.buttons {
-  display: flex;
-  gap: 10px;
-  margin-top: 22px;
-}
-
-button.action {
-  flex: 1;
-  border: 0;
-  border-radius: 25px;
-  padding: 14px 8px;
-  color: white;
-  background: #e879ad;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button.action:last-child {
-  background: #a78bfa;
-}
-
-button:focus-visible {
-  outline: 3px solid #823b69;
-  outline-offset: 3px;
-}
-
-.footer {
-  margin-top: 20px;
-  font-size: 13px;
-  color: #b27d9f;
-}
+.action.secondary{background:#a78bfa}
+.note{font-size:12px;color:#b078a0;margin-top:18px}
+button:focus-visible{outline:3px solid #873b70;outline-offset:3px}
 </style>
 </head>
-
 <body>
-<div class="container">
-  <h1>🎀 Tic Tac Toe 🎀</h1>
-  <div class="subtitle">A little game, a lot of fun!</div>
+<main class="app">
+<h1>🎀 Tic Tac Toe 🎀</h1>
+<div class="sub">Choose your game mode!</div>
 
-  <div class="scores">
-    <div class="score-box">
-      Player X
-      <strong id="scoreX">0</strong>
-    </div>
-    <div class="score-box">
-      Draws
-      <strong id="scoreD">0</strong>
-    </div>
-    <div class="score-box">
-      Player O
-      <strong id="scoreO">0</strong>
-    </div>
-  </div>
-
-  <div id="status" aria-live="polite">Player X's turn 💗</div>
-
-  <div class="board" id="board">
-    <button class="cell" data-i="0" aria-label="Cell 1"></button>
-    <button class="cell" data-i="1" aria-label="Cell 2"></button>
-    <button class="cell" data-i="2" aria-label="Cell 3"></button>
-    <button class="cell" data-i="3" aria-label="Cell 4"></button>
-    <button class="cell" data-i="4" aria-label="Cell 5"></button>
-    <button class="cell" data-i="5" aria-label="Cell 6"></button>
-    <button class="cell" data-i="6" aria-label="Cell 7"></button>
-    <button class="cell" data-i="7" aria-label="Cell 8"></button>
-    <button class="cell" data-i="8" aria-label="Cell 9"></button>
-  </div>
-
-  <div class="buttons">
-    <button class="action" id="restart">🔄 New Round</button>
-    <button class="action" id="reset">🗑 Reset Scores</button>
-  </div>
-
-  <div class="footer">✨ Besties today, champions forever ✨</div>
+<div class="modes">
+<button class="mode active" id="two">👭 2 Players</button>
+<button class="mode" id="cpu">🤖 vs Computer</button>
 </div>
 
+<div class="scores">
+<div class="score"><span id="labelX">Player X</span><strong id="sx">0</strong></div>
+<div class="score">Draws<strong id="sd">0</strong></div>
+<div class="score"><span id="labelO">Player O</span><strong id="so">0</strong></div>
+</div>
+
+<div id="status" aria-live="polite">Player X's turn 💗</div>
+
+<div class="board">
+<button class="cell" data-i="0" aria-label="Cell 1"></button>
+<button class="cell" data-i="1" aria-label="Cell 2"></button>
+<button class="cell" data-i="2" aria-label="Cell 3"></button>
+<button class="cell" data-i="3" aria-label="Cell 4"></button>
+<button class="cell" data-i="4" aria-label="Cell 5"></button>
+<button class="cell" data-i="5" aria-label="Cell 6"></button>
+<button class="cell" data-i="6" aria-label="Cell 7"></button>
+<button class="cell" data-i="7" aria-label="Cell 8"></button>
+<button class="cell" data-i="8" aria-label="Cell 9"></button>
+</div>
+
+<div class="actions">
+<button class="action" id="new">🔄 New Round</button>
+<button class="action secondary" id="reset">🗑 Reset Scores</button>
+</div>
+<div class="note">✨ Have fun & play! ✨</div>
+</main>
+
 <script>
-const cells = [...document.querySelectorAll(".cell")];
-const statusText = document.getElementById("status");
-
-let board = Array(9).fill("");
-let current = "X";
-let finished = false;
-let scores = { X: 0, O: 0, D: 0 };
-
-const wins = [
-  [0,1,2], [3,4,5], [6,7,8],
-  [0,3,6], [1,4,7], [2,5,8],
-  [0,4,8], [2,4,6]
+const cells=[...document.querySelectorAll(".cell")];
+const statusEl=document.getElementById("status");
+const twoBtn=document.getElementById("two");
+const cpuBtn=document.getElementById("cpu");
+const lines=[
+[0,1,2],[3,4,5],[6,7,8],
+[0,3,6],[1,4,7],[2,5,8],
+[0,4,8],[2,4,6]
 ];
 
-function play(index) {
-  if (finished || board[index] !== "") return;
+let board=[],current="X",finished=false,mode="two",thinking=false;
+let scores={X:0,O:0,D:0};
+let roundId=0;
 
-  board[index] = current;
-  cells[index].textContent = current;
-  cells[index].classList.toggle("o", current === "O");
-  cells[index].setAttribute(
-    "aria-label",
-    "Cell " + (index + 1) + ": " + current
-  );
-
-  const winningLine = wins.find(line =>
-    line.every(i => board[i] === current)
-  );
-
-  if (winningLine) {
-    finished = true;
-    winningLine.forEach(i => cells[i].classList.add("win"));
-    scores[current]++;
-    updateScores();
-    statusText.textContent = "🎉 Player " + current + " wins!";
-    return;
-  }
-
-  if (board.every(cell => cell !== "")) {
-    finished = true;
-    scores.D++;
-    updateScores();
-    statusText.textContent = "🤝 It's a draw!";
-    return;
-  }
-
-  current = current === "X" ? "O" : "X";
-  statusText.textContent = "Player " + current + "'s turn 💗";
+function updateScores(){
+ document.getElementById("sx").textContent=scores.X;
+ document.getElementById("so").textContent=scores.O;
+ document.getElementById("sd").textContent=scores.D;
 }
 
-function updateScores() {
-  document.getElementById("scoreX").textContent = scores.X;
-  document.getElementById("scoreO").textContent = scores.O;
-  document.getElementById("scoreD").textContent = scores.D;
+function setMode(m){
+ mode=m;
+ twoBtn.classList.toggle("active",m==="two");
+ cpuBtn.classList.toggle("active",m==="cpu");
+ document.getElementById("labelX").textContent=
+   m==="cpu"?"You (X)":"Player X";
+ document.getElementById("labelO").textContent=
+   m==="cpu"?"Computer (O)":"Player O";
+ scores={X:0,O:0,D:0};
+ updateScores();
+ newRound();
 }
 
-function newRound() {
-  board = Array(9).fill("");
-  current = "X";
-  finished = false;
-
-  cells.forEach((cell, i) => {
-    cell.textContent = "";
-    cell.classList.remove("o", "win");
-    cell.setAttribute("aria-label", "Cell " + (i + 1));
-  });
-
-  statusText.textContent = "Player X's turn 💗";
+function newRound(){
+ roundId++;
+ board=Array(9).fill("");
+ current="X";
+ finished=false;
+ thinking=false;
+ cells.forEach((c,i)=>{
+  c.textContent="";
+  c.classList.remove("o","win");
+  c.disabled=false;
+  c.setAttribute("aria-label","Cell "+(i+1));
+ });
+ statusEl.textContent=mode==="cpu"?"Your turn! 💗":"Player X's turn 💗";
 }
 
-cells.forEach((cell, i) => {
-  cell.addEventListener("click", () => play(i));
-});
+function winner(b){
+ for(const line of lines){
+  const [a,c,d]=line;
+  if(b[a] && b[a]===b[c] && b[a]===b[d])
+   return {player:b[a],line};
+ }
+ return null;
+}
 
-document.getElementById("restart").addEventListener("click", newRound);
+function place(i,player){
+ if(board[i]!==""||finished)return;
+ board[i]=player;
+ cells[i].textContent=player;
+ cells[i].classList.toggle("o",player==="O");
+ cells[i].setAttribute("aria-label",
+   "Cell "+(i+1)+": "+player);
+ const result=winner(board);
 
-document.getElementById("reset").addEventListener("click", () => {
-  scores = { X: 0, O: 0, D: 0 };
+ if(result){
+  finished=true;
+  result.line.forEach(n=>cells[n].classList.add("win"));
+  scores[player]++;
   updateScores();
-  newRound();
+  statusEl.textContent=mode==="cpu"
+   ?(player==="X"?"🎉 You win!":"🤖 Computer wins!")
+   :"🎉 Player "+player+" wins!";
+  cells.forEach(c=>c.disabled=true);
+  return;
+ }
+
+ if(board.every(v=>v!=="")){
+  finished=true;
+  scores.D++;
+  updateScores();
+  statusEl.textContent="🤝 It's a draw!";
+  cells.forEach(c=>c.disabled=true);
+  return;
+ }
+
+ current=player==="X"?"O":"X";
+ statusEl.textContent=mode==="cpu"
+  ?(current==="X"?"Your turn! 💗":"🤖 Computer is thinking...")
+  :"Player "+current+"'s turn 💗";
+}
+
+function minimax(b,isMax){
+ const result=winner(b);
+ if(result)return result.player==="O"?10:-10;
+ if(b.every(v=>v!==""))return 0;
+
+ if(isMax){
+  let best=-Infinity;
+  for(let i=0;i<9;i++){
+   if(!b[i]){
+    b[i]="O";
+    best=Math.max(best,minimax(b,false));
+    b[i]="";
+   }
+  }
+  return best;
+ }else{
+  let best=Infinity;
+  for(let i=0;i<9;i++){
+   if(!b[i]){
+    b[i]="X";
+    best=Math.min(best,minimax(b,true));
+    b[i]="";
+   }
+  }
+  return best;
+ }
+}
+
+function computerMove(){
+ if(finished||mode!=="cpu"||current!=="O")return;
+
+ let best=-Infinity,choices=[];
+ for(let i=0;i<9;i++){
+  if(board[i]===""){
+   board[i]="O";
+   const value=minimax(board,false);
+   board[i]="";
+   if(value>best){best=value;choices=[i];}
+   else if(value===best)choices.push(i);
+  }
+ }
+
+ if(choices.length){
+  const move=choices[Math.floor(Math.random()*choices.length)];
+  place(move,"O");
+ }
+ thinking=false;
+}
+
+cells.forEach((cell,i)=>{
+ cell.addEventListener("click",()=>{
+  if(finished||thinking||board[i]!=="")return;
+  if(mode==="cpu"&&current!=="X")return;
+
+  place(i,current);
+
+  if(mode==="cpu"&&!finished&&current==="O"){
+   thinking=true;
+   const id=roundId;
+   setTimeout(()=>{
+    if(id!==roundId)return;
+    computerMove();
+   },350);
+  }
+ });
 });
+
+twoBtn.addEventListener("click",()=>setMode("two"));
+cpuBtn.addEventListener("click",()=>setMode("cpu"));
+document.getElementById("new").addEventListener("click",newRound);
+document.getElementById("reset").addEventListener("click",()=>{
+ scores={X:0,O:0,D:0};
+ updateScores();
+ newRound();
+});
+
+newRound();
 </script>
 </body>
   </html>
-      
+  
