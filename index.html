@@ -4,119 +4,51 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kaati Jero 💜</title>
-
+<title>Tic Tac Toe 💜</title>
 <style>
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  padding: 20px 12px;
-  font-family: Arial, sans-serif;
-  text-align: center;
-  color: #51416e;
-  background: linear-gradient(145deg, #fff5ff, #e9dcff, #f9eaff);
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;padding:22px 12px;
+  font-family:Arial,sans-serif;text-align:center;color:#57416e;
+  background:linear-gradient(145deg,#fff4fb,#e9dcff,#fce9f5);
 }
-
-.container {
-  max-width: 430px;
-  margin: auto;
-  padding: 22px 15px;
-  border-radius: 28px;
-  background: rgba(255,255,255,0.78);
-  box-shadow: 0 8px 30px #a78bc733;
+.container{
+  max-width:430px;margin:auto;padding:22px 14px;
+  border-radius:28px;background:#ffffffdf;
+  box-shadow:0 10px 35px #8d6cb52b;
 }
-
-h1 {
-  margin: 4px 0;
-  font-size: 34px;
-  color: #8b5bc0;
+h1{font-size:34px;color:#9665c7;margin:4px 0}
+.subtitle{margin:8px 0 18px}
+button{
+  border:0;border-radius:14px;padding:12px 14px;margin:4px;
+  font-size:14px;font-weight:bold;color:#62477d;background:#eadcff;
+  cursor:pointer;touch-action:manipulation;
 }
-
-.subtitle { margin: 8px 0 18px; }
-
-button {
-  border: none;
-  border-radius: 14px;
-  padding: 12px 14px;
-  margin: 4px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  color: #60447e;
-  background: #eadcff;
-  touch-action: manipulation;
+button:active{transform:scale(.97)}
+.selected{background:#a579d3;color:white}
+.controls{margin:9px 0}
+#status{min-height:45px;margin:15px 0;font-size:19px;font-weight:bold}
+.board{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  max-width:330px;margin:15px auto 20px;
 }
-
-button:active { transform: scale(.97); }
-
-button.selected {
-  background: #a778d6;
-  color: white;
+.cell{
+  aspect-ratio:1;margin:0;padding:0;border-radius:19px;
+  background:#f0e5ff;font-size:clamp(38px,12vw,58px);
+  box-shadow:0 4px 9px #9c79bb20;
 }
-
-.controls { margin: 10px 0; }
-
-#status {
-  min-height: 48px;
-  margin: 16px 0 10px;
-  font-size: 19px;
-  font-weight: bold;
-}
-
-.board {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  max-width: 330px;
-  margin: 14px auto 20px;
-}
-
-.cell {
-  aspect-ratio: 1;
-  padding: 0;
-  margin: 0;
-  border-radius: 20px;
-  background: #f0e5ff;
-  font-size: clamp(38px, 12vw, 58px);
-  box-shadow: 0 4px 8px #9c79bb22;
-  color: #8b5bc0;
-}
-
-.cell.x { color: #a16bd1; }
-.cell.o { color: #ed8fb9; }
-
-.cell.winner {
-  background: #d8f8e5;
-  box-shadow: 0 0 0 3px #78c99a;
-}
-
-.scoreboard {
-  display: flex;
-  justify-content: space-around;
-  gap: 8px;
-  margin: 14px 0;
-  padding: 13px 5px;
-  background: #faf4ff;
-  border-radius: 16px;
-}
-
-.score { flex: 1; font-size: 14px; }
-.score strong {
-  display: block;
-  font-size: 24px;
-  margin-top: 5px;
-}
-
-.small { font-size: 12px; opacity: .8; }
+.cell.x{color:#9b69d0}.cell.o{color:#ed8fb9}
+.cell.winner{background:#d9f8e5;box-shadow:0 0 0 3px #7bc89c}
+.scoreboard{display:flex;gap:5px;padding:12px 3px;background:#faf4ff;border-radius:16px}
+.score{flex:1;font-size:13px}
+.score strong{display:block;font-size:24px;margin-top:5px}
+.small{font-size:12px;opacity:.8;line-height:1.5}
 </style>
 </head>
-
 <body>
 <div class="container">
-  <h1>💜 Kaati Jero 💜</h1>
-  <p class="subtitle">Let's play together! ✨</p>
+  <h1>🎮 Tic Tac Toe</h1>
+  <p class="subtitle">Play, think & win! 💜</p>
 
   <div class="controls">
     <button id="twoPlayer" class="selected">👭 2 Players</button>
@@ -124,22 +56,22 @@ button.selected {
   </div>
 
   <div class="controls">
-    <button id="musicButton">🎵 Music: ON</button>
+    <button id="musicButton">🎵 Music: OFF</button>
     <button id="soundButton">🔊 Sound: ON</button>
   </div>
 
   <div id="status" aria-live="polite">X's turn! ❌</div>
 
-  <div class="board" id="board">
-    <button class="cell" data-index="0" aria-label="Cell 1"></button>
-    <button class="cell" data-index="1" aria-label="Cell 2"></button>
-    <button class="cell" data-index="2" aria-label="Cell 3"></button>
-    <button class="cell" data-index="3" aria-label="Cell 4"></button>
-    <button class="cell" data-index="4" aria-label="Cell 5"></button>
-    <button class="cell" data-index="5" aria-label="Cell 6"></button>
-    <button class="cell" data-index="6" aria-label="Cell 7"></button>
-    <button class="cell" data-index="7" aria-label="Cell 8"></button>
-    <button class="cell" data-index="8" aria-label="Cell 9"></button>
+  <div class="board">
+    <button class="cell" data-i="0" aria-label="Cell 1"></button>
+    <button class="cell" data-i="1" aria-label="Cell 2"></button>
+    <button class="cell" data-i="2" aria-label="Cell 3"></button>
+    <button class="cell" data-i="3" aria-label="Cell 4"></button>
+    <button class="cell" data-i="4" aria-label="Cell 5"></button>
+    <button class="cell" data-i="5" aria-label="Cell 6"></button>
+    <button class="cell" data-i="6" aria-label="Cell 7"></button>
+    <button class="cell" data-i="7" aria-label="Cell 8"></button>
+    <button class="cell" data-i="8" aria-label="Cell 9"></button>
   </div>
 
   <div class="scoreboard">
@@ -150,302 +82,244 @@ button.selected {
 
   <button id="newRound">✨ New Round</button>
   <button id="resetScores">🔄 Reset Scores</button>
-
-  <p class="small">Made with 💜 Have fun!</p>
+  <p class="small">Music starts after you tap a button.<br>Made with 💜</p>
 </div>
 
 <script>
-const cells = [...document.querySelectorAll(".cell")];
-const statusText = document.getElementById("status");
-const musicButton = document.getElementById("musicButton");
-const soundButton = document.getElementById("soundButton");
-
-const winPatterns = [
-  [0,1,2], [3,4,5], [6,7,8],
-  [0,3,6], [1,4,7], [2,5,8],
-  [0,4,8], [2,4,6]
+const cells=[...document.querySelectorAll(".cell")];
+const statusText=document.getElementById("status");
+const patterns=[
+ [0,1,2],[3,4,5],[6,7,8],
+ [0,3,6],[1,4,7],[2,5,8],
+ [0,4,8],[2,4,6]
 ];
 
-let board = Array(9).fill("");
-let currentPlayer = "X";
-let gameOver = false;
-let vsComputer = false;
-let scores = { X: 0, O: 0, draw: 0 };
+let board=Array(9).fill("");
+let current="X",gameOver=false,vsComputer=false;
+let computerThinking=false;
+let scores={X:0,O:0,draw:0};
+let audioCtx=null,soundOn=true,musicOn=false,musicTimer=null,musicStep=0;
 
-let audioContext = null;
-let musicOn = true;
-let soundOn = true;
-let musicTimer = null;
-let musicStep = 0;
-
-function initAudio() {
-  const AudioCtx = window.AudioContext || window.webkitAudioContext;
-  if (!AudioCtx) return false;
-
-  if (!audioContext) audioContext = new AudioCtx();
-
-  if (audioContext.state === "suspended") {
-    audioContext.resume().catch(() => {});
-  }
-  return true;
+function initAudio(){
+ const AC=window.AudioContext||window.webkitAudioContext;
+ if(!AC){statusText.textContent="Audio isn't supported in this browser.";return false}
+ if(!audioCtx)audioCtx=new AC();
+ if(audioCtx.state==="suspended")audioCtx.resume().catch(()=>{});
+ return true;
 }
 
-function tone(freq, duration = 0.15, type = "sine",
-              volume = 0.05, delay = 0) {
-  if (!audioContext) return;
-
-  const start = audioContext.currentTime + delay;
-  const oscillator = audioContext.createOscillator();
-  const gain = audioContext.createGain();
-
-  oscillator.type = type;
-  oscillator.frequency.setValueAtTime(freq, start);
-
-  gain.gain.setValueAtTime(0.001, start);
-  gain.gain.exponentialRampToValueAtTime(
-    Math.max(volume, 0.002), start + 0.015
-  );
-  gain.gain.exponentialRampToValueAtTime(
-    0.001, start + duration
-  );
-
-  oscillator.connect(gain);
-  gain.connect(audioContext.destination);
-
-  oscillator.start(start);
-  oscillator.stop(start + duration + 0.03);
+function tone(freq,duration=.14,type="sine",volume=.04,delay=0){
+ if(!audioCtx)return;
+ const start=audioCtx.currentTime+delay;
+ const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();
+ osc.type=type;
+ osc.frequency.setValueAtTime(freq,start);
+ gain.gain.setValueAtTime(.001,start);
+ gain.gain.exponentialRampToValueAtTime(Math.max(volume,.002),start+.015);
+ gain.gain.exponentialRampToValueAtTime(.001,start+duration);
+ osc.connect(gain);gain.connect(audioCtx.destination);
+ osc.start(start);osc.stop(start+duration+.03);
 }
 
-function playTap() {
-  if (!soundOn || !initAudio()) return;
-  tone(620, 0.09, "sine", 0.055);
+function tapSound(){
+ if(soundOn&&initAudio())tone(600,.09,"sine",.05);
+}
+function winSound(){
+ if(!soundOn||!initAudio())return;
+ [523,659,784,1047].forEach((n,i)=>tone(n,.24,"sine",.065,i*.15));
+}
+function drawSound(){
+ if(!soundOn||!initAudio())return;
+ [440,392,330].forEach((n,i)=>tone(n,.22,"triangle",.05,i*.19));
+}
+function newSound(){
+ if(!soundOn||!initAudio())return;
+ tone(520,.1,"sine",.04);
+ tone(700,.12,"sine",.04,.11);
 }
 
-function playWin() {
-  if (!soundOn || !initAudio()) return;
-  [523, 659, 784, 1047].forEach((n, i) => {
-    tone(n, 0.24, "sine", 0.07, i * 0.16);
+function startMusic(){
+ if(musicTimer||!musicOn)return;
+ if(!initAudio())return;
+ const melody=[523,659,784,659,587,698,880,698,523,659,784,880,784,659,587,523];
+ musicStep=0;
+ function playNote(){
+  if(!musicOn||!audioCtx)return;
+  const n=melody[musicStep%melody.length];
+  tone(n,.27,"sine",.022);
+  tone(n/2,.29,"triangle",.008,.02);
+  musicStep++;
+ }
+ playNote();
+ musicTimer=setInterval(playNote,320);
+}
+function stopMusic(){
+ if(musicTimer!==null){clearInterval(musicTimer);musicTimer=null}
+}
+function wakeAudio(){
+ if(initAudio()&&musicOn)startMusic();
+}
+
+function winner(){
+ for(const p of patterns){
+  const [a,b,c]=p;
+  if(board[a]&&board[a]===board[b]&&board[b]===board[c])
+   return {player:board[a],line:p};
+ }
+ return null;
+}
+
+function render(){
+ cells.forEach((cell,i)=>{
+  cell.textContent=board[i]==="X"?"❌":board[i]==="O"?"⭕":"";
+  cell.className="cell"+(board[i]==="X"?" x":board[i]==="O"?" o":"");
+  cell.disabled=gameOver||computerThinking||board[i]!=="";
+ });
+}
+function updateScores(){
+ document.getElementById("xScore").textContent=scores.X;
+ document.getElementById("oScore").textContent=scores.O;
+ document.getElementById("drawScore").textContent=scores.draw;
+}
+function finishIfNeeded(){
+ const w=winner();
+ if(w){
+  gameOver=true;
+  scores[w.player]++;
+  w.line.forEach(i=>cells[i].classList.add("winner"));
+  statusText.textContent=w.player==="X"?"X wins! 🎉🏆":
+    (vsComputer?"Computer wins! 🤖🏆":"O wins! 🎉🏆");
+  winSound();updateScores();render();return true;
+ }
+ if(board.every(Boolean)){
+  gameOver=true;scores.draw++;
+  statusText.textContent="It's a Draw! 🤝💜";
+  drawSound();updateScores();render();return true;
+ }
+ return false;
+}
+function playMove(i){
+ if(gameOver||computerThinking||board[i])return;
+ wakeAudio();
+ board[i]=current;
+ tapSound();render();
+ if(finishIfNeeded())return;
+ current=current==="X"?"O":"X";
+ statusText.textContent=current+"'s turn! "+(current==="X"?"❌":"⭕");
+ if(vsComputer&&current==="O"){
+  computerThinking=true;render();
+  statusText.textContent="Computer is thinking... 🤔";
+  setTimeout(computerMove,450);
+ }
+}
+
+// Computer: wins when possible and blocks immediate wins.
+// Otherwise it chooses strategic moves, but sometimes makes a human-like mistake.
+function findImmediateMove(player){
+ for(let i=0;i<9;i++){
+  if(board[i]!=="")continue;
+  board[i]=player;
+  const wins=!!winner();
+  board[i]="";
+  if(wins)return i;
+ }
+ return -1;
+}
+function strategicMove(){
+ const free=board.map((v,i)=>v===""?i:-1).filter(i=>i!==-1);
+ if(!free.length)return -1;
+
+ // Most turns: seek a fork, block the opponent's fork, then take a centre/corner.
+ // Occasionally skip this strategy so the computer can fall into a trap.
+ const makeMistake=Math.random()<0.24;
+ if(!makeMistake){
+  const forks=free.filter(i=>{
+   board[i]="O";
+   let threats=0;
+   for(let j=0;j<9;j++){
+    if(board[j]!=="")continue;
+    board[j]="O";
+    if(winner())threats++;
+    board[j]="";
+   }
+   board[i]="";
+   return threats>=2;
   });
-}
+  if(forks.length)return forks[Math.floor(Math.random()*forks.length)];
 
-function playDraw() {
-  if (!soundOn || !initAudio()) return;
-  [440, 392, 330].forEach((n, i) => {
-    tone(n, 0.22, "triangle", 0.06, i * 0.20);
+  const xForks=free.filter(i=>{
+   board[i]="X";
+   let threats=0;
+   for(let j=0;j<9;j++){
+    if(board[j]!=="")continue;
+    board[j]="X";
+    if(winner())threats++;
+    board[j]="";
+   }
+   board[i]="";
+   return threats>=2;
   });
+  if(xForks.length)return xForks[Math.floor(Math.random()*xForks.length)];
+
+  if(board[4]==="")return 4;
+  const corners=[0,2,6,8].filter(i=>board[i]==="");
+  if(corners.length&&Math.random()<.75)
+   return corners[Math.floor(Math.random()*corners.length)];
+ }
+ return free[Math.floor(Math.random()*free.length)];
+}
+function computerMove(){
+ if(gameOver||!vsComputer)return;
+ let move=findImmediateMove("O"); // take a winning move
+ if(move===-1)move=findImmediateMove("X"); // block an immediate X win
+ if(move===-1)move=strategicMove(); // smart, but not perfect
+ computerThinking=false;
+ if(move!==-1){
+  board[move]="O";tapSound();render();
+  if(finishIfNeeded())return;
+ }
+ current="X";
+ statusText.textContent="Your turn! ❌";
+ render();
 }
 
-function playNewRound() {
-  if (!soundOn || !initAudio()) return;
-  tone(500, 0.10, "sine", 0.04);
-  tone(700, 0.12, "sine", 0.04, 0.10);
+function newRound(playSound=true){
+ if(playSound){wakeAudio();newSound()}
+ board=Array(9).fill("");
+ current="X";gameOver=false;computerThinking=false;
+ statusText.textContent="X's turn! ❌";
+ render();
 }
-
-function startMusic() {
-  if (musicTimer || !musicOn) return;
-  if (!initAudio()) return;
-
-  const melody = [
-    523, 659, 784, 659, 587, 698, 880, 698,
-    523, 659, 784, 1047, 880, 784, 659, 523
-  ];
-
-  musicStep = 0;
-
-  function playNote() {
-    if (!musicOn || !audioContext) return;
-
-    const note = melody[musicStep % melody.length];
-    tone(note, 0.26, "sine", 0.025);
-    tone(note / 2, 0.28, "triangle", 0.009, 0.02);
-    musicStep++;
-  }
-
-  playNote();
-  musicTimer = setInterval(playNote, 320);
-}
-
-function stopMusic() {
-  if (musicTimer) clearInterval(musicTimer);
-  musicTimer = null;
-}
-
-function unlockAudio() {
-  if (initAudio() && musicOn) startMusic();
-}
-
-function getWinner() {
-  for (const pattern of winPatterns) {
-    const [a, b, c] = pattern;
-    if (board[a] && board[a] === board[b] &&
-        board[b] === board[c]) {
-      return { player: board[a], pattern };
-    }
-  }
-  return null;
-}
-
-function renderBoard() {
-  cells.forEach((cell, i) => {
-    cell.textContent = board[i] === "X" ? "❌" :
-                       board[i] === "O" ? "⭕" : "";
-    cell.classList.toggle("x", board[i] === "X");
-    cell.classList.toggle("o", board[i] === "O");
-    cell.classList.remove("winner");
-    cell.disabled = gameOver || board[i] !== "";
-  });
-}
-
-function updateScores() {
-  document.getElementById("xScore").textContent = scores.X;
-  document.getElementById("oScore").textContent = scores.O;
-  document.getElementById("drawScore").textContent = scores.draw;
-}
-
-function finishRound() {
-  const result = getWinner();
-
-  if (result) {
-    gameOver = true;
-    scores[result.player]++;
-    result.pattern.forEach(i => cells[i].classList.add("winner"));
-    statusText.textContent = result.player === "X"
-      ? "X wins! 🎉🏆"
-      : (vsComputer ? "Computer wins! 🤖" : "O wins! 🎉🏆");
-    playWin();
-    updateScores();
-    renderBoard();
-    return true;
-  }
-
-  if (board.every(cell => cell !== "")) {
-    gameOver = true;
-    scores.draw++;
-    statusText.textContent = "It's a Draw! 🤝💜";
-    playDraw();
-    updateScores();
-    renderBoard();
-    return true;
-  }
-
-  return false;
-}
-
-function makeMove(index) {
-  if (gameOver || board[index]) return;
-
-  unlockAudio();
-  board[index] = currentPlayer;
-  playTap();
-  renderBoard();
-
-  if (finishRound()) return;
-
-  currentPlayer = currentPlayer === "X" ? "O" : "X";
-  statusText.textContent = currentPlayer + "'s turn! " +
-    (currentPlayer === "X" ? "❌" : "⭕");
-
-  if (vsComputer && currentPlayer === "O" && !gameOver) {
-    cells.forEach(cell => cell.disabled = true);
-    setTimeout(computerMove, 450);
-  }
-}
-
-function computerMove() {
-  if (gameOver || !vsComputer) return;
-
-  // Try to win, then block X, otherwise choose a free cell.
-  let choice = findWinningMove("O");
-  if (choice === -1) choice = findWinningMove("X");
-
-  if (choice === -1) {
-    const preferred = [4, 0, 2, 6, 8, 1, 3, 5, 7]
-      .filter(i => board[i] === "");
-    choice = preferred.length
-      ? preferred[Math.floor(Math.random() * preferred.length)]
-      : -1;
-  }
-
-  if (choice !== -1) makeMove(choice);
-}
-
-function findWinningMove(player) {
-  for (let i = 0; i < 9; i++) {
-    if (board[i] !== "") continue;
-    board[i] = player;
-    const wins = getWinner() !== null;
-    board[i] = "";
-    if (wins) return i;
-  }
-  return -1;
-}
-
-function newRound(playSound = true) {
-  if (playSound) {
-    unlockAudio();
-    playNewRound();
-  }
-
-  board = Array(9).fill("");
-  currentPlayer = "X";
-  gameOver = false;
-  statusText.textContent = "X's turn! ❌";
-  renderBoard();
-}
-
-cells.forEach((cell, i) => {
-  cell.addEventListener("click", () => makeMove(i));
+document.getElementById("twoPlayer").addEventListener("click",()=>{
+ wakeAudio();vsComputer=false;
+ document.getElementById("twoPlayer").classList.add("selected");
+ document.getElementById("computer").classList.remove("selected");
+ newRound();
 });
-
-document.getElementById("twoPlayer").addEventListener("click", () => {
-  unlockAudio();
-  vsComputer = false;
-  document.getElementById("twoPlayer").classList.add("selected");
-  document.getElementById("computer").classList.remove("selected");
-  newRound();
+document.getElementById("computer").addEventListener("click",()=>{
+ wakeAudio();vsComputer=true;
+ document.getElementById("computer").classList.add("selected");
+ document.getElementById("twoPlayer").classList.remove("selected");
+ newRound();
 });
-
-document.getElementById("computer").addEventListener("click", () => {
-  unlockAudio();
-  vsComputer = true;
-  document.getElementById("computer").classList.add("selected");
-  document.getElementById("twoPlayer").classList.remove("selected");
-  newRound();
+cells.forEach((cell,i)=>cell.addEventListener("click",()=>playMove(i)));
+document.getElementById("newRound").addEventListener("click",()=>newRound());
+document.getElementById("resetScores").addEventListener("click",()=>{
+ wakeAudio();scores={X:0,O:0,draw:0};updateScores();newRound();
 });
-
-document.getElementById("newRound").addEventListener("click", () => {
-  newRound();
+document.getElementById("musicButton").addEventListener("click",()=>{
+ if(!initAudio())return;
+ musicOn=!musicOn;
+ document.getElementById("musicButton").textContent=musicOn?"🎵 Music: ON":"🎵 Music: OFF";
+ if(musicOn)startMusic();else stopMusic();
 });
-
-document.getElementById("resetScores").addEventListener("click", () => {
-  unlockAudio();
-  scores = { X: 0, O: 0, draw: 0 };
-  updateScores();
-  newRound();
+document.getElementById("soundButton").addEventListener("click",()=>{
+ wakeAudio();soundOn=!soundOn;
+ document.getElementById("soundButton").textContent=soundOn?"🔊 Sound: ON":"🔇 Sound: OFF";
+ if(soundOn)tone(650,.1,"sine",.05);
 });
-
-musicButton.addEventListener("click", () => {
-  unlockAudio();
-  musicOn = !musicOn;
-  musicButton.textContent = musicOn
-    ? "🎵 Music: ON" : "🎵 Music: OFF";
-
-  if (musicOn) startMusic();
-  else stopMusic();
-});
-
-soundButton.addEventListener("click", () => {
-  unlockAudio();
-  soundOn = !soundOn;
-  soundButton.textContent = soundOn
-    ? "🔊 Sound: ON" : "🔇 Sound: OFF";
-
-  if (soundOn) playTap();
-});
-
-renderBoard();
-updateScores();
+render();updateScores();
 </script>
 </body>
-                               </html>
- 
+  </html>
+  
