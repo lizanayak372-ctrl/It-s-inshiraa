@@ -3,262 +3,449 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tic Tac Toe 🎀</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaati Jero 💜</title>
+
 <style>
-*{box-sizing:border-box}
-body{
- margin:0;min-height:100vh;padding:20px 12px;
- display:flex;align-items:center;justify-content:center;
- font-family:Arial,sans-serif;
- background:linear-gradient(135deg,#ffe0ef,#e9ddff);
- color:#873b70
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 20px 12px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  color: #51416e;
+  background: linear-gradient(145deg, #fff5ff, #e9dcff, #f9eaff);
 }
-.app{
- width:100%;max-width:390px;text-align:center;padding:23px 17px;
- background:#ffffffdf;border:2px solid white;border-radius:28px;
- box-shadow:0 12px 35px #ba78aa35
+
+.container {
+  max-width: 430px;
+  margin: auto;
+  padding: 22px 15px;
+  border-radius: 28px;
+  background: rgba(255,255,255,0.78);
+  box-shadow: 0 8px 30px #a78bc733;
 }
-h1{font-size:29px;margin:0 0 8px}
-.sub{color:#b078a0;margin-bottom:20px}
-.modes{display:flex;gap:9px;margin-bottom:18px}
-.mode{
- flex:1;padding:12px 5px;border:2px solid #f4c6df;
- border-radius:14px;background:#fff5fa;color:#a34e83;
- font-weight:bold;font-size:13px;cursor:pointer
+
+h1 {
+  margin: 4px 0;
+  font-size: 34px;
+  color: #8b5bc0;
 }
-.mode.active{background:#e879ad;color:white;border-color:#e879ad}
-.scores{display:flex;gap:8px;margin-bottom:15px}
-.score{flex:1;padding:10px 2px;background:#fff0f7;border-radius:13px;font-size:12px}
-.score strong{display:block;font-size:24px;margin-top:5px}
-#status{font-weight:bold;font-size:17px;min-height:25px;margin:16px 0}
-.board{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.cell{
- aspect-ratio:1;border:0;border-radius:17px;background:#fff0f7;
- box-shadow:0 4px 0 #efc2dc;font-size:45px;font-weight:bold;
- color:#e34d98;cursor:pointer
+
+.subtitle { margin: 8px 0 18px; }
+
+button {
+  border: none;
+  border-radius: 14px;
+  padding: 12px 14px;
+  margin: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #60447e;
+  background: #eadcff;
+  touch-action: manipulation;
 }
-.cell.o{color:#9570df}
-.cell.win{background:#d8f8e7;box-shadow:0 4px 0 #9cdcb8}
-.actions{display:flex;gap:9px;margin-top:20px}
-.action{
- flex:1;padding:13px 5px;border:0;border-radius:25px;
- background:#e879ad;color:white;font-weight:bold;cursor:pointer;font-size:13px
+
+button:active { transform: scale(.97); }
+
+button.selected {
+  background: #a778d6;
+  color: white;
 }
-.action.secondary{background:#a78bfa}
-.note{font-size:12px;color:#b078a0;margin-top:18px}
-button:focus-visible{outline:3px solid #873b70;outline-offset:3px}
+
+.controls { margin: 10px 0; }
+
+#status {
+  min-height: 48px;
+  margin: 16px 0 10px;
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  max-width: 330px;
+  margin: 14px auto 20px;
+}
+
+.cell {
+  aspect-ratio: 1;
+  padding: 0;
+  margin: 0;
+  border-radius: 20px;
+  background: #f0e5ff;
+  font-size: clamp(38px, 12vw, 58px);
+  box-shadow: 0 4px 8px #9c79bb22;
+  color: #8b5bc0;
+}
+
+.cell.x { color: #a16bd1; }
+.cell.o { color: #ed8fb9; }
+
+.cell.winner {
+  background: #d8f8e5;
+  box-shadow: 0 0 0 3px #78c99a;
+}
+
+.scoreboard {
+  display: flex;
+  justify-content: space-around;
+  gap: 8px;
+  margin: 14px 0;
+  padding: 13px 5px;
+  background: #faf4ff;
+  border-radius: 16px;
+}
+
+.score { flex: 1; font-size: 14px; }
+.score strong {
+  display: block;
+  font-size: 24px;
+  margin-top: 5px;
+}
+
+.small { font-size: 12px; opacity: .8; }
 </style>
 </head>
+
 <body>
-<main class="app">
-<h1>🎀 Tic Tac Toe 🎀</h1>
-<div class="sub">Choose your game mode!</div>
+<div class="container">
+  <h1>💜 Kaati Jero 💜</h1>
+  <p class="subtitle">Let's play together! ✨</p>
 
-<div class="modes">
-<button class="mode active" id="two">👭 2 Players</button>
-<button class="mode" id="cpu">🤖 vs Computer</button>
+  <div class="controls">
+    <button id="twoPlayer" class="selected">👭 2 Players</button>
+    <button id="computer">🤖 vs Computer</button>
+  </div>
+
+  <div class="controls">
+    <button id="musicButton">🎵 Music: ON</button>
+    <button id="soundButton">🔊 Sound: ON</button>
+  </div>
+
+  <div id="status" aria-live="polite">X's turn! ❌</div>
+
+  <div class="board" id="board">
+    <button class="cell" data-index="0" aria-label="Cell 1"></button>
+    <button class="cell" data-index="1" aria-label="Cell 2"></button>
+    <button class="cell" data-index="2" aria-label="Cell 3"></button>
+    <button class="cell" data-index="3" aria-label="Cell 4"></button>
+    <button class="cell" data-index="4" aria-label="Cell 5"></button>
+    <button class="cell" data-index="5" aria-label="Cell 6"></button>
+    <button class="cell" data-index="6" aria-label="Cell 7"></button>
+    <button class="cell" data-index="7" aria-label="Cell 8"></button>
+    <button class="cell" data-index="8" aria-label="Cell 9"></button>
+  </div>
+
+  <div class="scoreboard">
+    <div class="score">❌ X Wins<strong id="xScore">0</strong></div>
+    <div class="score">🤝 Draws<strong id="drawScore">0</strong></div>
+    <div class="score">⭕ O Wins<strong id="oScore">0</strong></div>
+  </div>
+
+  <button id="newRound">✨ New Round</button>
+  <button id="resetScores">🔄 Reset Scores</button>
+
+  <p class="small">Made with 💜 Have fun!</p>
 </div>
-
-<div class="scores">
-<div class="score"><span id="labelX">Player X</span><strong id="sx">0</strong></div>
-<div class="score">Draws<strong id="sd">0</strong></div>
-<div class="score"><span id="labelO">Player O</span><strong id="so">0</strong></div>
-</div>
-
-<div id="status" aria-live="polite">Player X's turn 💗</div>
-
-<div class="board">
-<button class="cell" data-i="0" aria-label="Cell 1"></button>
-<button class="cell" data-i="1" aria-label="Cell 2"></button>
-<button class="cell" data-i="2" aria-label="Cell 3"></button>
-<button class="cell" data-i="3" aria-label="Cell 4"></button>
-<button class="cell" data-i="4" aria-label="Cell 5"></button>
-<button class="cell" data-i="5" aria-label="Cell 6"></button>
-<button class="cell" data-i="6" aria-label="Cell 7"></button>
-<button class="cell" data-i="7" aria-label="Cell 8"></button>
-<button class="cell" data-i="8" aria-label="Cell 9"></button>
-</div>
-
-<div class="actions">
-<button class="action" id="new">🔄 New Round</button>
-<button class="action secondary" id="reset">🗑 Reset Scores</button>
-</div>
-<div class="note">✨ Have fun & play! ✨</div>
-</main>
 
 <script>
-const cells=[...document.querySelectorAll(".cell")];
-const statusEl=document.getElementById("status");
-const twoBtn=document.getElementById("two");
-const cpuBtn=document.getElementById("cpu");
-const lines=[
-[0,1,2],[3,4,5],[6,7,8],
-[0,3,6],[1,4,7],[2,5,8],
-[0,4,8],[2,4,6]
+const cells = [...document.querySelectorAll(".cell")];
+const statusText = document.getElementById("status");
+const musicButton = document.getElementById("musicButton");
+const soundButton = document.getElementById("soundButton");
+
+const winPatterns = [
+  [0,1,2], [3,4,5], [6,7,8],
+  [0,3,6], [1,4,7], [2,5,8],
+  [0,4,8], [2,4,6]
 ];
 
-let board=[],current="X",finished=false,mode="two",thinking=false;
-let scores={X:0,O:0,D:0};
-let roundId=0;
+let board = Array(9).fill("");
+let currentPlayer = "X";
+let gameOver = false;
+let vsComputer = false;
+let scores = { X: 0, O: 0, draw: 0 };
 
-function updateScores(){
- document.getElementById("sx").textContent=scores.X;
- document.getElementById("so").textContent=scores.O;
- document.getElementById("sd").textContent=scores.D;
-}
+let audioContext = null;
+let musicOn = true;
+let soundOn = true;
+let musicTimer = null;
+let musicStep = 0;
 
-function setMode(m){
- mode=m;
- twoBtn.classList.toggle("active",m==="two");
- cpuBtn.classList.toggle("active",m==="cpu");
- document.getElementById("labelX").textContent=
-   m==="cpu"?"You (X)":"Player X";
- document.getElementById("labelO").textContent=
-   m==="cpu"?"Computer (O)":"Player O";
- scores={X:0,O:0,D:0};
- updateScores();
- newRound();
-}
+function initAudio() {
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  if (!AudioCtx) return false;
 
-function newRound(){
- roundId++;
- board=Array(9).fill("");
- current="X";
- finished=false;
- thinking=false;
- cells.forEach((c,i)=>{
-  c.textContent="";
-  c.classList.remove("o","win");
-  c.disabled=false;
-  c.setAttribute("aria-label","Cell "+(i+1));
- });
- statusEl.textContent=mode==="cpu"?"Your turn! 💗":"Player X's turn 💗";
-}
+  if (!audioContext) audioContext = new AudioCtx();
 
-function winner(b){
- for(const line of lines){
-  const [a,c,d]=line;
-  if(b[a] && b[a]===b[c] && b[a]===b[d])
-   return {player:b[a],line};
- }
- return null;
-}
-
-function place(i,player){
- if(board[i]!==""||finished)return;
- board[i]=player;
- cells[i].textContent=player;
- cells[i].classList.toggle("o",player==="O");
- cells[i].setAttribute("aria-label",
-   "Cell "+(i+1)+": "+player);
- const result=winner(board);
-
- if(result){
-  finished=true;
-  result.line.forEach(n=>cells[n].classList.add("win"));
-  scores[player]++;
-  updateScores();
-  statusEl.textContent=mode==="cpu"
-   ?(player==="X"?"🎉 You win!":"🤖 Computer wins!")
-   :"🎉 Player "+player+" wins!";
-  cells.forEach(c=>c.disabled=true);
-  return;
- }
-
- if(board.every(v=>v!=="")){
-  finished=true;
-  scores.D++;
-  updateScores();
-  statusEl.textContent="🤝 It's a draw!";
-  cells.forEach(c=>c.disabled=true);
-  return;
- }
-
- current=player==="X"?"O":"X";
- statusEl.textContent=mode==="cpu"
-  ?(current==="X"?"Your turn! 💗":"🤖 Computer is thinking...")
-  :"Player "+current+"'s turn 💗";
-}
-
-function minimax(b,isMax){
- const result=winner(b);
- if(result)return result.player==="O"?10:-10;
- if(b.every(v=>v!==""))return 0;
-
- if(isMax){
-  let best=-Infinity;
-  for(let i=0;i<9;i++){
-   if(!b[i]){
-    b[i]="O";
-    best=Math.max(best,minimax(b,false));
-    b[i]="";
-   }
+  if (audioContext.state === "suspended") {
+    audioContext.resume().catch(() => {});
   }
-  return best;
- }else{
-  let best=Infinity;
-  for(let i=0;i<9;i++){
-   if(!b[i]){
-    b[i]="X";
-    best=Math.min(best,minimax(b,true));
-    b[i]="";
-   }
-  }
-  return best;
- }
+  return true;
 }
 
-function computerMove(){
- if(finished||mode!=="cpu"||current!=="O")return;
+function tone(freq, duration = 0.15, type = "sine",
+              volume = 0.05, delay = 0) {
+  if (!audioContext) return;
 
- let best=-Infinity,choices=[];
- for(let i=0;i<9;i++){
-  if(board[i]===""){
-   board[i]="O";
-   const value=minimax(board,false);
-   board[i]="";
-   if(value>best){best=value;choices=[i];}
-   else if(value===best)choices.push(i);
-  }
- }
+  const start = audioContext.currentTime + delay;
+  const oscillator = audioContext.createOscillator();
+  const gain = audioContext.createGain();
 
- if(choices.length){
-  const move=choices[Math.floor(Math.random()*choices.length)];
-  place(move,"O");
- }
- thinking=false;
+  oscillator.type = type;
+  oscillator.frequency.setValueAtTime(freq, start);
+
+  gain.gain.setValueAtTime(0.001, start);
+  gain.gain.exponentialRampToValueAtTime(
+    Math.max(volume, 0.002), start + 0.015
+  );
+  gain.gain.exponentialRampToValueAtTime(
+    0.001, start + duration
+  );
+
+  oscillator.connect(gain);
+  gain.connect(audioContext.destination);
+
+  oscillator.start(start);
+  oscillator.stop(start + duration + 0.03);
 }
 
-cells.forEach((cell,i)=>{
- cell.addEventListener("click",()=>{
-  if(finished||thinking||board[i]!=="")return;
-  if(mode==="cpu"&&current!=="X")return;
+function playTap() {
+  if (!soundOn || !initAudio()) return;
+  tone(620, 0.09, "sine", 0.055);
+}
 
-  place(i,current);
+function playWin() {
+  if (!soundOn || !initAudio()) return;
+  [523, 659, 784, 1047].forEach((n, i) => {
+    tone(n, 0.24, "sine", 0.07, i * 0.16);
+  });
+}
 
-  if(mode==="cpu"&&!finished&&current==="O"){
-   thinking=true;
-   const id=roundId;
-   setTimeout(()=>{
-    if(id!==roundId)return;
-    computerMove();
-   },350);
+function playDraw() {
+  if (!soundOn || !initAudio()) return;
+  [440, 392, 330].forEach((n, i) => {
+    tone(n, 0.22, "triangle", 0.06, i * 0.20);
+  });
+}
+
+function playNewRound() {
+  if (!soundOn || !initAudio()) return;
+  tone(500, 0.10, "sine", 0.04);
+  tone(700, 0.12, "sine", 0.04, 0.10);
+}
+
+function startMusic() {
+  if (musicTimer || !musicOn) return;
+  if (!initAudio()) return;
+
+  const melody = [
+    523, 659, 784, 659, 587, 698, 880, 698,
+    523, 659, 784, 1047, 880, 784, 659, 523
+  ];
+
+  musicStep = 0;
+
+  function playNote() {
+    if (!musicOn || !audioContext) return;
+
+    const note = melody[musicStep % melody.length];
+    tone(note, 0.26, "sine", 0.025);
+    tone(note / 2, 0.28, "triangle", 0.009, 0.02);
+    musicStep++;
   }
- });
+
+  playNote();
+  musicTimer = setInterval(playNote, 320);
+}
+
+function stopMusic() {
+  if (musicTimer) clearInterval(musicTimer);
+  musicTimer = null;
+}
+
+function unlockAudio() {
+  if (initAudio() && musicOn) startMusic();
+}
+
+function getWinner() {
+  for (const pattern of winPatterns) {
+    const [a, b, c] = pattern;
+    if (board[a] && board[a] === board[b] &&
+        board[b] === board[c]) {
+      return { player: board[a], pattern };
+    }
+  }
+  return null;
+}
+
+function renderBoard() {
+  cells.forEach((cell, i) => {
+    cell.textContent = board[i] === "X" ? "❌" :
+                       board[i] === "O" ? "⭕" : "";
+    cell.classList.toggle("x", board[i] === "X");
+    cell.classList.toggle("o", board[i] === "O");
+    cell.classList.remove("winner");
+    cell.disabled = gameOver || board[i] !== "";
+  });
+}
+
+function updateScores() {
+  document.getElementById("xScore").textContent = scores.X;
+  document.getElementById("oScore").textContent = scores.O;
+  document.getElementById("drawScore").textContent = scores.draw;
+}
+
+function finishRound() {
+  const result = getWinner();
+
+  if (result) {
+    gameOver = true;
+    scores[result.player]++;
+    result.pattern.forEach(i => cells[i].classList.add("winner"));
+    statusText.textContent = result.player === "X"
+      ? "X wins! 🎉🏆"
+      : (vsComputer ? "Computer wins! 🤖" : "O wins! 🎉🏆");
+    playWin();
+    updateScores();
+    renderBoard();
+    return true;
+  }
+
+  if (board.every(cell => cell !== "")) {
+    gameOver = true;
+    scores.draw++;
+    statusText.textContent = "It's a Draw! 🤝💜";
+    playDraw();
+    updateScores();
+    renderBoard();
+    return true;
+  }
+
+  return false;
+}
+
+function makeMove(index) {
+  if (gameOver || board[index]) return;
+
+  unlockAudio();
+  board[index] = currentPlayer;
+  playTap();
+  renderBoard();
+
+  if (finishRound()) return;
+
+  currentPlayer = currentPlayer === "X" ? "O" : "X";
+  statusText.textContent = currentPlayer + "'s turn! " +
+    (currentPlayer === "X" ? "❌" : "⭕");
+
+  if (vsComputer && currentPlayer === "O" && !gameOver) {
+    cells.forEach(cell => cell.disabled = true);
+    setTimeout(computerMove, 450);
+  }
+}
+
+function computerMove() {
+  if (gameOver || !vsComputer) return;
+
+  // Try to win, then block X, otherwise choose a free cell.
+  let choice = findWinningMove("O");
+  if (choice === -1) choice = findWinningMove("X");
+
+  if (choice === -1) {
+    const preferred = [4, 0, 2, 6, 8, 1, 3, 5, 7]
+      .filter(i => board[i] === "");
+    choice = preferred.length
+      ? preferred[Math.floor(Math.random() * preferred.length)]
+      : -1;
+  }
+
+  if (choice !== -1) makeMove(choice);
+}
+
+function findWinningMove(player) {
+  for (let i = 0; i < 9; i++) {
+    if (board[i] !== "") continue;
+    board[i] = player;
+    const wins = getWinner() !== null;
+    board[i] = "";
+    if (wins) return i;
+  }
+  return -1;
+}
+
+function newRound(playSound = true) {
+  if (playSound) {
+    unlockAudio();
+    playNewRound();
+  }
+
+  board = Array(9).fill("");
+  currentPlayer = "X";
+  gameOver = false;
+  statusText.textContent = "X's turn! ❌";
+  renderBoard();
+}
+
+cells.forEach((cell, i) => {
+  cell.addEventListener("click", () => makeMove(i));
 });
 
-twoBtn.addEventListener("click",()=>setMode("two"));
-cpuBtn.addEventListener("click",()=>setMode("cpu"));
-document.getElementById("new").addEventListener("click",newRound);
-document.getElementById("reset").addEventListener("click",()=>{
- scores={X:0,O:0,D:0};
- updateScores();
- newRound();
+document.getElementById("twoPlayer").addEventListener("click", () => {
+  unlockAudio();
+  vsComputer = false;
+  document.getElementById("twoPlayer").classList.add("selected");
+  document.getElementById("computer").classList.remove("selected");
+  newRound();
 });
 
-newRound();
+document.getElementById("computer").addEventListener("click", () => {
+  unlockAudio();
+  vsComputer = true;
+  document.getElementById("computer").classList.add("selected");
+  document.getElementById("twoPlayer").classList.remove("selected");
+  newRound();
+});
+
+document.getElementById("newRound").addEventListener("click", () => {
+  newRound();
+});
+
+document.getElementById("resetScores").addEventListener("click", () => {
+  unlockAudio();
+  scores = { X: 0, O: 0, draw: 0 };
+  updateScores();
+  newRound();
+});
+
+musicButton.addEventListener("click", () => {
+  unlockAudio();
+  musicOn = !musicOn;
+  musicButton.textContent = musicOn
+    ? "🎵 Music: ON" : "🎵 Music: OFF";
+
+  if (musicOn) startMusic();
+  else stopMusic();
+});
+
+soundButton.addEventListener("click", () => {
+  unlockAudio();
+  soundOn = !soundOn;
+  soundButton.textContent = soundOn
+    ? "🔊 Sound: ON" : "🔇 Sound: OFF";
+
+  if (soundOn) playTap();
+});
+
+renderBoard();
+updateScores();
 </script>
 </body>
-  </html>
-  
+                               </html>
+ 
