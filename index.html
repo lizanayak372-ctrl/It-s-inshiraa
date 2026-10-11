@@ -171,7 +171,7 @@ function winner(){
 
 function render(){
  cells.forEach((cell,i)=>{
-  cell.textContent=board[i]==="X"?"❌":board[i]==="O"?"⭕":"";
+  cell.textContent=board[i];
   cell.className="cell"+(board[i]==="X"?" x":board[i]==="O"?" o":"");
   cell.disabled=gameOver||computerThinking||board[i]!=="";
  });
